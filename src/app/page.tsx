@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { Highlighter } from "@/components/animated/Highlighter";
 import { BookIcon, CodeIcon, GitHubIcon, GlobeIcon, ToolsIcon } from "@/components/icons/Icons";
 import { DATA } from "@/data/data";
+import { AnimatedSpan, Terminal, TypingAnimation } from "@/components/animated/Terminal";
 
 export default function Home() {
 	const currentYear = new Date().getFullYear();
@@ -35,7 +37,13 @@ export default function Home() {
 						The Creation of Layers
 					</div>
 					<h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-10 leading-tight">
-						Build <span className="italic text-emerald-600">Deeper</span>.
+						Build{" "}
+						<span className="italic text-emerald-600">
+							<Highlighter action="underline" color="#007a55" isView={true}>
+								Deeper
+							</Highlighter>
+						</span>
+						.
 						<br />
 						Impact Stronger.
 					</h1>
@@ -223,28 +231,24 @@ export default function Home() {
 				<div className="absolute inset-0 bg-gradient-to-br from-emerald-50/30 via-green-50/30 to-teal-50/30"></div>
 				<div className="w-full max-w-none px-6 mx-auto text-center relative z-10">
 					<div className="max-w-4xl mx-auto">
-						<div className="mb-8">
-							<div className="bg-gray-900 rounded-2xl p-8 mb-8 text-left max-w-md mx-auto shadow-lg">
-								<div className="flex items-center gap-4 mb-4">
-									<div className="flex gap-1">
-										<div className="w-3 h-3 bg-red-500 rounded-full"></div>
-										<div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-										<div className="w-3 h-3 bg-green-500 rounded-full"></div>
-									</div>
-								</div>
+						<div className="mb-8 flex items-center justify-center">
+							<Terminal className="rounded-2xl text-left max-w-md mx-auto shadow-lg">
+								{/* Code lines with animation */}
 								<div className="font-mono text-sm text-white">
-									<div className="text-pink-400">
-										1 | <span className="text-purple-400">while</span> {`{`}
-									</div>
-									<div className="text-pink-400">
-										2 | <span className="ml-8 text-blue-400">build()</span>
-									</div>
-									<div className="text-pink-400">
-										3 | {`}`} <span className="text-purple-400">create</span>{" "}
-										<span className="text-yellow-400">(layers)</span>
-									</div>
+									<TypingAnimation className="text-purple-400">while &#123;</TypingAnimation>
+
+									<AnimatedSpan className="text-blue-400">
+										<TypingAnimation className="ml-8">build()</TypingAnimation>
+									</AnimatedSpan>
+
+									<AnimatedSpan className="text-emerald-900">
+										<TypingAnimation>&#125;</TypingAnimation>
+										<span>
+											<TypingAnimation>create (layers)</TypingAnimation>
+										</span>
+									</AnimatedSpan>
 								</div>
-							</div>
+							</Terminal>
 						</div>
 						<p className="mb-4">
 							Technology evolves through layers, each one building
