@@ -2,7 +2,7 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 
-import { Outfit } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
@@ -10,9 +10,15 @@ import { DATA } from "@/data/data";
 
 import { cx } from "@/utils/tailwind";
 
-const outfit = Outfit({
+const geist = Geist({
 	subsets: ["latin"],
-	variable: "--font-outfit",
+	variable: "--font-geist",
+	display: "swap",
+});
+
+const geistMono = Geist_Mono({
+	subsets: ["latin"],
+	variable: "--font-geist-mono",
 	display: "swap",
 });
 
@@ -52,8 +58,8 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" suppressHydrationWarning className={outfit.variable}>
-			<body className={cx("min-h-screen font-outfit antialiased mx-auto", outfit.variable)}>
+		<html lang="en" suppressHydrationWarning className={cx(geist.variable, geistMono.variable)}>
+			<body className={cx("min-h-screen font-sans antialiased mx-auto", geist.variable, geistMono.variable)}>
 				<ThemeProvider attribute="class" defaultTheme="light">
 					{children}
 				</ThemeProvider>
