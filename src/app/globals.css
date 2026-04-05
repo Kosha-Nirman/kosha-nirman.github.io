@@ -87,6 +87,7 @@
 @theme inline {
 	--font-sans: var(--font-geist);
 	--font-mono: var(--font-geist-mono);
+	--font-pixel: var(--font-geist-pixel-square);
 }
 
 @utility container {

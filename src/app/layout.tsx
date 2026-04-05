@@ -2,6 +2,7 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 
+import { GeistPixelSquare } from "geist/font/pixel";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
@@ -58,8 +59,19 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" suppressHydrationWarning className={cx(geist.variable, geistMono.variable)}>
-			<body className={cx("min-h-screen font-sans antialiased mx-auto", geist.variable, geistMono.variable)}>
+		<html
+			lang="en"
+			suppressHydrationWarning
+			className={cx(geist.variable, geistMono.variable, GeistPixelSquare.variable)}
+		>
+			<body
+				className={cx(
+					"min-h-screen font-sans antialiased mx-auto",
+					geist.variable,
+					geistMono.variable,
+					GeistPixelSquare.variable,
+				)}
+			>
 				<ThemeProvider attribute="class" defaultTheme="light">
 					{children}
 				</ThemeProvider>
