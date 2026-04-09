@@ -1,22 +1,23 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { BookIcon, CodeIcon, GitHubIcon, GlobeIcon, ToolsIcon } from "@/components/icons/Icons";
 import { DATA } from "@/data/data";
 
-/* ─── tiny helpers ─────────────────────────────────────────────────── */
+/* ─── animation helpers ─────────────────────────────────────────────── */
 const fadeUp = (delay = 0) => ({
-	initial: { opacity: 0, y: 28 },
+	initial: { opacity: 0, y: 20 },
 	animate: { opacity: 1, y: 0 },
-	transition: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] as const },
+	transition: { duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] as const },
 });
 
 const inView = (delay = 0) => ({
-	initial: { opacity: 0, y: 28 },
+	initial: { opacity: 0, y: 20 },
 	whileInView: { opacity: 1, y: 0 },
-	viewport: { once: true, margin: "-60px" },
-	transition: { duration: 0.55, delay, ease: [0.16, 1, 0.3, 1] as const },
+	viewport: { once: true, margin: "-40px" },
+	transition: { duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] as const },
 });
 
 /* ─── static data ───────────────────────────────────────────────────── */
@@ -27,11 +28,7 @@ const cards = [
 		title: "Contributors",
 		desc: "Join our community of developers building impactful tools. Contribute code, documentation, or ideas to projects that enhance productivity worldwide.",
 		link: "Start Contributing",
-		accent: "#f97316",
-		accentBg: "bg-orange-500",
-		accentText: "text-orange-500",
-		accentBorder: "hover:border-orange-400/60",
-		accentShadow: "hover:shadow-orange-500/10",
+		dot: "bg-orange-500",
 	},
 	{
 		num: "02",
@@ -39,11 +36,7 @@ const cards = [
 		title: "Maintainers",
 		desc: "Take ownership of projects and help guide their development. Lead initiatives, mentor contributors, and shape the future of our ecosystem.",
 		link: "Learn More",
-		accent: "#6b7280",
-		accentBg: "bg-gray-500",
-		accentText: "text-gray-400",
-		accentBorder: "hover:border-gray-400/40",
-		accentShadow: "hover:shadow-gray-500/10",
+		dot: "bg-gray-500",
 	},
 	{
 		num: "03",
@@ -51,11 +44,7 @@ const cards = [
 		title: "Community Builders",
 		desc: "Help grow our community by creating content, organizing events, and connecting developers. Share knowledge across our ecosystem.",
 		link: "Get Involved",
-		accent: "#a855f7",
-		accentBg: "bg-purple-500",
-		accentText: "text-purple-400",
-		accentBorder: "hover:border-purple-400/60",
-		accentShadow: "hover:shadow-purple-500/10",
+		dot: "bg-purple-500",
 	},
 	{
 		num: "04",
@@ -63,11 +52,7 @@ const cards = [
 		title: "Technical Writers",
 		desc: "Craft comprehensive guides and documentation that help developers understand and use our tools. Make complex concepts accessible to everyone.",
 		link: "Start Writing",
-		accent: "#10b981",
-		accentBg: "bg-emerald-500",
-		accentText: "text-emerald-400",
-		accentBorder: "hover:border-emerald-400/60",
-		accentShadow: "hover:shadow-emerald-500/10",
+		dot: "bg-emerald-500",
 	},
 ];
 
@@ -80,34 +65,99 @@ const features = [
 
 const ticker = ["100% Open Source", "Community Driven", "Developer First", "Zero Barriers", "Build Deeper", "Impact Stronger"];
 
-/* ─── custom code terminal ─────────────────────────────────────────── */
+const stats = [
+	{ value: "100%", label: "Open Source" },
+	{ value: "∞", label: "Layers Deep" },
+	{ value: "0", label: "Barriers" },
+];
+
+/* ─── layer stack visual ────────────────────────────────────────────── */
+const layers = [
+	{ icon: CodeIcon,  label: "Open Source",     sub: "MIT Licensed",      color: "bg-blue-50   border-blue-100",   dot: "bg-blue-500"    },
+	{ icon: ToolsIcon, label: "Developer Tools",  sub: "Zero Friction",     color: "bg-amber-50  border-amber-100",  dot: "bg-amber-500"   },
+	{ icon: GlobeIcon, label: "Community Driven", sub: "Built Together",    color: "bg-purple-50 border-purple-100", dot: "bg-purple-500"  },
+	{ icon: BookIcon,  label: "Documentation",    sub: "Always Current",    color: "bg-emerald-50 border-emerald-100", dot: "bg-emerald-500" },
+];
+
+// pos 0 = front (bottom of stack), pos N-1 = back (top, most hidden)
+const STACK_CONFIG = [
+	{ y: 0,   scale: 1,    opacity: 1,    zIndex: 4, shadow: "shadow-lg"  },
+	{ y: -16, scale: 0.96, opacity: 0.75, zIndex: 3, shadow: "shadow-md"  },
+	{ y: -30, scale: 0.92, opacity: 0.5,  zIndex: 2, shadow: "shadow-sm"  },
+	{ y: -42, scale: 0.88, opacity: 0.3,  zIndex: 1, shadow: "shadow-none" },
+];
+
+function LayerStack() {
+	const [front, setFront] = useState(0);
+	const n = layers.length;
+
+	useEffect(() => {
+		const id = setInterval(() => setFront((f) => (f + 1) % n), 2000);
+		return () => clearInterval(id);
+	}, [n]);
+
+	return (
+		<div className="relative w-full max-w-sm mx-auto" style={{ height: 130, overflow: "visible" }}>
+			{layers.map((layer, i) => {
+				// how far back is this card from the current front?
+				const pos = (i - front + n) % n;
+				const cfg = STACK_CONFIG[pos];
+				return (
+					<motion.div
+						key={layer.label}
+						className={`absolute left-0 right-0 flex items-center gap-4 px-5 py-4 rounded-xl border-2 bg-white ${cfg.shadow} ${layer.color}`}
+						style={{ top: 42 }} // base y so back-cards peek above
+						animate={{
+							y:       cfg.y,
+							scale:   cfg.scale,
+							opacity: cfg.opacity,
+							zIndex:  cfg.zIndex,
+						}}
+						transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+					>
+						<div className={`w-10 h-10 rounded-lg ${layer.color} border flex items-center justify-center shrink-0`}>
+							<layer.icon className="w-5 h-5 text-gray-700" />
+						</div>
+						<div className="flex-1 min-w-0">
+							<div className="font-semibold text-gray-900 text-sm leading-tight">{layer.label}</div>
+							<div className="text-gray-400 text-xs mt-0.5">{layer.sub}</div>
+						</div>
+						<div className="flex items-center gap-1.5 shrink-0">
+							<span className={`w-2 h-2 rounded-full ${layer.dot}`} />
+							<span className="font-pixel text-[9px] text-gray-400 uppercase tracking-widest">Active</span>
+						</div>
+					</motion.div>
+				);
+			})}
+		</div>
+	);
+}
+
+/* ─── code terminal ─────────────────────────────────────────────────── */
 function CodeTerminal() {
 	const lines = [
-		{ indent: 0, tokens: [{ text: "while", color: "text-purple-400" }, { text: " {", color: "text-gray-300" }] },
-		{ indent: 4, tokens: [{ text: "build", color: "text-blue-400" }, { text: "()", color: "text-gray-300" }] },
-		{ indent: 0, tokens: [{ text: "}", color: "text-gray-300" }] },
+		{ indent: 0, tokens: [{ text: "while", color: "text-purple-400" }, { text: " {", color: "text-gray-400" }] },
+		{ indent: 4, tokens: [{ text: "build", color: "text-blue-400" }, { text: "()", color: "text-gray-400" }] },
+		{ indent: 0, tokens: [{ text: "}", color: "text-gray-400" }] },
 		{
 			indent: 0,
 			tokens: [
 				{ text: "create", color: "text-emerald-400" },
-				{ text: "(", color: "text-gray-300" },
+				{ text: "(", color: "text-gray-400" },
 				{ text: "layers", color: "text-amber-300" },
-				{ text: ")", color: "text-gray-300" },
+				{ text: ")", color: "text-gray-400" },
 			],
 		},
 	];
 
 	return (
-		<motion.div
-			className="rounded-xl overflow-hidden border border-white/8 bg-gray-950 w-full max-w-xs mx-auto text-left shadow-2xl shadow-black/60"
-			{...inView(0)}
-		>
+		<div className="rounded-xl overflow-hidden border border-gray-800 bg-gray-950 w-full max-w-sm text-left shadow-2xl">
 			{/* Chrome bar */}
-			<div className="flex items-center gap-1.5 px-4 py-3 bg-gray-900/80 border-b border-white/5">
+			<div className="flex items-center gap-1.5 px-4 py-3 bg-gray-900 border-b border-gray-800">
 				<span className="w-3 h-3 rounded-full bg-red-500/80" />
 				<span className="w-3 h-3 rounded-full bg-yellow-500/80" />
 				<span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-				<span className="ml-auto font-mono text-[10px] text-gray-600 tracking-wider">kosha.sh</span>
+				<span className="ml-auto font-pixel text-[10px] text-gray-500 tracking-wider">kosha.sh</span>
 			</div>
 			{/* Lines */}
 			<div className="p-5 space-y-2">
@@ -132,7 +182,7 @@ function CodeTerminal() {
 						</span>
 					</motion.div>
 				))}
-				{/* Cursor line */}
+				{/* Cursor */}
 				<motion.div
 					className="flex items-center"
 					initial={{ opacity: 0 }}
@@ -147,7 +197,7 @@ function CodeTerminal() {
 					</span>
 				</motion.div>
 			</div>
-		</motion.div>
+		</div>
 	);
 }
 
@@ -156,178 +206,107 @@ export default function Home() {
 	const currentYear = new Date().getFullYear();
 
 	return (
-		<div className="min-h-screen">
+		<div className="min-h-screen bg-white text-gray-900">
+
 			{/* ── NAV ───────────────────────────────────────────────────────── */}
 			<motion.nav
-				className="sticky top-0 z-50 w-full bg-gray-950/90 backdrop-blur-xl border-b border-white/5"
-				initial={{ y: -72, opacity: 0 }}
+				className="sticky top-0 z-50 w-full bg-white border-b border-gray-200"
+				initial={{ y: -64, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
-				transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+				transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
 			>
-				<div className="flex justify-between items-center px-6 py-3.5 max-w-7xl mx-auto">
-					<motion.div
-						className="flex items-center gap-2.5 cursor-pointer"
-						whileHover={{ scale: 1.02 }}
-						transition={{ type: "spring", stiffness: 400, damping: 20 }}
-					>
-						<Image src="/logo.svg" alt={DATA.name} width={32} height={32} className="w-8 h-8" />
+				<div className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+					<div className="flex items-center gap-3 cursor-pointer">
+						<Image src="/logo.svg" alt={DATA.name} width={36} height={36} className="w-9 h-9" />
 						<div className="leading-none">
-							<span className="font-mono font-semibold text-[15px] text-white block tracking-tight">{DATA.name}</span>
-							<span className="font-mono text-[10px] text-emerald-500 tracking-wider">{DATA.subtitle}</span>
+							<span className="font-bold text-[16px] text-gray-900 block tracking-tight">{DATA.name}</span>
+							<span className="font-pixel text-[9px] text-emerald-600 tracking-widest uppercase">{DATA.subtitle}</span>
 						</div>
-					</motion.div>
+					</div>
 
-					<div className="hidden md:flex items-center gap-6">
-						<a href="#contribute" className="font-mono text-sm text-gray-500 hover:text-gray-200 transition-colors">
+					<div className="hidden md:flex items-center gap-8">
+						<a href="#contribute" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
 							Contribute
 						</a>
-						<a href="#projects" className="font-mono text-sm text-gray-500 hover:text-gray-200 transition-colors">
+						<a href="#projects" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
 							Projects
 						</a>
-						<motion.a
+						<a
 							href={DATA.github}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="bg-emerald-600 text-white px-4 py-2 rounded-full text-sm font-mono font-medium inline-flex items-center gap-2 shadow-lg shadow-emerald-900/40"
-							whileHover={{ scale: 1.06, backgroundColor: "#059669" }}
-							whileTap={{ scale: 0.96 }}
-							transition={{ duration: 0.15 }}
+							className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold inline-flex items-center gap-2 transition-colors"
 						>
-							<GitHubIcon className="w-3.5 h-3.5" /> GitHub
-						</motion.a>
+							<GitHubIcon className="w-4 h-4" /> GitHub
+						</a>
 					</div>
 				</div>
 			</motion.nav>
 
 			{/* ── HERO ──────────────────────────────────────────────────────── */}
-			<section className="relative overflow-hidden bg-gray-950 min-h-[calc(100vh-3.75rem)] flex flex-col items-center justify-center py-24 px-6">
-				{/* Radial emerald glow */}
-				<div className="absolute inset-0 pointer-events-none">
-					<div
-						className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] rounded-full opacity-[0.07]"
-						style={{ background: "radial-gradient(ellipse, #10b981 0%, transparent 70%)" }}
-					/>
-				</div>
+			<section className="bg-white border-b border-gray-100">
+				<div className="max-w-7xl mx-auto px-6 py-14 md:py-28 flex flex-col md:flex-row items-center gap-10 md:gap-16">
 
-				{/* Dot grid */}
-				<div
-					className="absolute inset-0 opacity-[0.08] pointer-events-none"
-					style={{
-						backgroundImage: "radial-gradient(circle, #10b981 1px, transparent 1px)",
-						backgroundSize: "36px 36px",
-					}}
-				/>
+					{/* Left copy */}
+					<div className="w-full md:flex-1 md:max-w-xl">
+						<motion.div
+							className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-full px-4 py-1.5 mb-6 md:mb-8"
+							{...fadeUp(0.1)}
+						>
+							<span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+							<span className="font-pixel text-[10px] uppercase tracking-widest text-emerald-700">
+								The Creation of Layers
+							</span>
+						</motion.div>
 
-				{/* Slow-drifting orbs */}
-				<motion.div
-					className="absolute top-[15%] right-[12%] w-80 h-80 rounded-full bg-emerald-500/10 blur-[80px] pointer-events-none"
-					animate={{ scale: [1, 1.25, 1], x: [0, 30, 0], y: [0, -20, 0] }}
-					transition={{ duration: 14, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-				/>
-				<motion.div
-					className="absolute bottom-[15%] left-[8%] w-64 h-64 rounded-full bg-teal-500/10 blur-[70px] pointer-events-none"
-					animate={{ scale: [1.1, 1, 1.1], x: [0, -20, 0], y: [0, 24, 0] }}
-					transition={{ duration: 16, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-				/>
+						<motion.h1
+							className="font-bold text-gray-900 leading-[1.08] tracking-tight mb-5 md:mb-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
+							{...fadeUp(0.2)}
+						>
+							Build Deeper.{" "}
+							<span className="text-emerald-600 block">Impact Stronger.</span>
+						</motion.h1>
 
-				<div className="max-w-5xl mx-auto text-center relative z-10">
-					{/* Badge */}
-					<motion.div
-						className="mb-10 inline-flex items-center gap-2.5 bg-white/5 backdrop-blur-sm rounded-full px-5 py-2.5 border border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.08)]"
-						{...fadeUp(0.1)}
-					>
-						<motion.span
-							className="w-2 h-2 rounded-full bg-emerald-500 block shrink-0"
-							animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-							transition={{ duration: 2.2, repeat: Number.POSITIVE_INFINITY }}
-						/>
-						<span className="font-mono text-[11px] uppercase tracking-widest text-gray-400">
-							The Creation of Layers
-						</span>
-						<span className="text-gray-700">·</span>
-						<span className="font-mono text-[11px] text-emerald-500 tracking-wide">{DATA.subtitle}</span>
+						<motion.p
+							className="text-gray-500 text-lg md:text-xl mb-10 leading-relaxed"
+							{...fadeUp(0.35)}
+						>
+							Kosha Nirman crafts open-source tools and systems with depth — every layer
+							contributes to meaningful solutions that empower developers and businesses.
+						</motion.p>
+
+						<motion.div className="flex gap-3 flex-wrap" {...fadeUp(0.45)}>
+							<a
+								href="#projects"
+								className="bg-emerald-600 hover:bg-emerald-700 text-white px-7 py-3.5 rounded-lg font-semibold text-[15px] transition-colors inline-block"
+							>
+								Explore Projects
+							</a>
+							<a
+								href="#contribute"
+								className="border-2 border-gray-200 hover:border-gray-300 text-gray-700 hover:text-gray-900 px-7 py-3.5 rounded-lg font-semibold text-[15px] transition-colors inline-block"
+							>
+								Contribute →
+							</a>
+						</motion.div>
+
+						{/* Stats row */}
+						<motion.div className="flex gap-8 mt-12 pt-10 border-t border-gray-100" {...fadeUp(0.55)}>
+							{stats.map((s) => (
+								<div key={s.label}>
+									<div className="font-bold text-2xl text-gray-900">{s.value}</div>
+									<div className="text-sm text-gray-400 font-medium mt-0.5">{s.label}</div>
+								</div>
+							))}
+						</motion.div>
+					</div>
+
+					{/* Right — layer stack */}
+					<motion.div className="w-full md:flex-1 flex justify-center md:justify-end" {...fadeUp(0.3)}>
+						<LayerStack />
 					</motion.div>
 
-					{/* Headline */}
-					<h1 className="font-mono font-bold text-white leading-[1.02] tracking-tight mb-8 text-[clamp(2.8rem,8vw,6.5rem)]">
-						<div className="overflow-hidden">
-							<motion.span
-								className="block"
-								initial={{ y: 110, opacity: 0 }}
-								animate={{ y: 0, opacity: 1 }}
-								transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-							>
-								Build
-							</motion.span>
-						</div>
-						<div className="overflow-hidden">
-							<motion.span
-								className="block text-transparent bg-clip-text"
-								style={{
-									backgroundImage:
-										"linear-gradient(90deg, #34d399 0%, #10b981 40%, #059669 100%)",
-								}}
-								initial={{ y: 110, opacity: 0 }}
-								animate={{ y: 0, opacity: 1 }}
-								transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-							>
-								Deeper.
-							</motion.span>
-						</div>
-						<div className="overflow-hidden">
-							<motion.span
-								className="block"
-								initial={{ y: 110, opacity: 0 }}
-								animate={{ y: 0, opacity: 1 }}
-								transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-							>
-								Impact Stronger.
-							</motion.span>
-						</div>
-					</h1>
-
-					<motion.p
-						className="text-gray-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed"
-						{...fadeUp(0.65)}
-					>
-						Kosha Nirman crafts open-source tools and systems with depth — every layer contributes
-						to meaningful solutions that empower developers and businesses.
-					</motion.p>
-
-					<motion.div className="flex gap-4 justify-center flex-wrap" {...fadeUp(0.8)}>
-						<motion.a
-							href="#projects"
-							className="bg-emerald-600 text-white px-8 py-4 rounded-full font-mono font-semibold text-[15px] shadow-xl shadow-emerald-900/40"
-							whileHover={{ scale: 1.05, boxShadow: "0 20px 60px rgba(16,185,129,0.4)" }}
-							whileTap={{ scale: 0.97 }}
-							transition={{ duration: 0.15 }}
-						>
-							Explore Projects
-						</motion.a>
-						<motion.a
-							href="#contribute"
-							className="border border-white/10 text-gray-300 px-8 py-4 rounded-full font-mono font-semibold text-[15px] hover:border-emerald-500/40 hover:text-white transition-colors"
-							whileHover={{ scale: 1.04 }}
-							whileTap={{ scale: 0.97 }}
-							transition={{ duration: 0.15 }}
-						>
-							Contribute →
-						</motion.a>
-					</motion.div>
 				</div>
-
-				{/* Scroll indicator */}
-				<motion.div
-					className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-30"
-					{...fadeUp(1.2)}
-				>
-					<span className="font-mono text-[10px] uppercase tracking-widest text-gray-500">Scroll</span>
-					<motion.div
-						className="w-px h-8 bg-gradient-to-b from-emerald-500 to-transparent"
-						animate={{ scaleY: [0, 1, 0], originY: 0 }}
-						transition={{ duration: 1.8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-					/>
-				</motion.div>
 			</section>
 
 			{/* ── TICKER ────────────────────────────────────────────────────── */}
@@ -338,8 +317,8 @@ export default function Home() {
 					transition={{ duration: 28, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
 				>
 					{[...ticker, ...ticker].map((item, i) => (
-						// biome-ignore lint/suspicious/noArrayIndexKey: duplicated ticker list, index is intentional
-						<span key={i} className="font-mono text-[11px] uppercase tracking-widest text-emerald-100 shrink-0">
+						// biome-ignore lint/suspicious/noArrayIndexKey: duplicated ticker
+						<span key={i} className="font-pixel text-[10px] uppercase tracking-widest text-emerald-100 shrink-0">
 							{item}
 							<span className="mx-6 text-emerald-300/60">·</span>
 						</span>
@@ -348,13 +327,13 @@ export default function Home() {
 			</div>
 
 			{/* ── JOIN THE MOVEMENT ─────────────────────────────────────────── */}
-			<section id="contribute" className="py-24 px-6 bg-white">
+			<section id="contribute" className="py-20 px-6 bg-[#f0f2f5]">
 				<div className="max-w-6xl mx-auto">
-					<motion.div className="mb-14" {...inView(0)}>
-						<span className="font-mono text-[11px] uppercase tracking-widest text-emerald-600 mb-3 block">
+					<motion.div className="mb-12" {...inView(0)}>
+						<span className="text-[11px] font-semibold uppercase tracking-widest text-emerald-600 mb-2 block">
 							Community
 						</span>
-						<h2 className="font-mono font-bold text-gray-900 text-4xl md:text-5xl tracking-tight">
+						<h2 className="font-bold text-gray-900 text-3xl md:text-5xl tracking-tight">
 							Join the Movement
 						</h2>
 					</motion.div>
@@ -366,29 +345,26 @@ export default function Home() {
 								href={DATA.github}
 								target="_blank"
 								rel="noopener noreferrer"
-								className={`group relative rounded-2xl p-7 border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-xl ${card.accentShadow} ${card.accentBorder} transition-all duration-300 block overflow-hidden`}
-								{...inView(i * 0.08)}
-								whileHover={{ y: -4 }}
+								className="group relative rounded-xl p-7 border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 block overflow-hidden"
+								{...inView(i * 0.07)}
 							>
 								{/* Number watermark */}
-								<span className="absolute top-4 right-6 font-mono text-6xl font-bold text-gray-100 group-hover:text-gray-50 transition-colors select-none">
+								<span className="absolute top-4 right-6 font-pixel text-5xl text-gray-100 select-none">
 									{card.num}
 								</span>
 
 								<div className="relative">
-									<div className="flex items-center gap-2 mb-5">
-										<span className={`w-2 h-2 rounded-full ${card.accentBg} shrink-0`} />
-										<span className="font-mono text-[11px] uppercase tracking-widest text-gray-400">
+									<div className="flex items-center gap-2 mb-4">
+										<span className={`w-2 h-2 rounded-full ${card.dot} shrink-0`} />
+										<span className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">
 											{card.badge}
 										</span>
 									</div>
 
-									<h3 className="font-mono font-bold text-gray-900 text-2xl mb-3 tracking-tight">{card.title}</h3>
+									<h3 className="font-bold text-gray-900 text-2xl mb-3 tracking-tight">{card.title}</h3>
 									<p className="text-gray-500 text-sm leading-relaxed mb-6">{card.desc}</p>
 
-									<span
-										className={`inline-flex items-center gap-1.5 font-mono font-medium text-sm ${card.accentText} group-hover:gap-3 transition-all duration-200`}
-									>
+									<span className="inline-flex items-center gap-1.5 font-semibold text-sm text-emerald-600 group-hover:gap-3 transition-all duration-200">
 										{card.link}
 										<span className="transition-transform group-hover:translate-x-1">→</span>
 									</span>
@@ -400,41 +376,29 @@ export default function Home() {
 			</section>
 
 			{/* ── FEATURES ──────────────────────────────────────────────────── */}
-			<section id="projects" className="py-24 px-6 bg-gray-950 relative overflow-hidden">
-				{/* Subtle emerald glow */}
-				<div
-					className="absolute inset-0 opacity-[0.04] pointer-events-none"
-					style={{ background: "radial-gradient(ellipse at 50% 100%, #10b981, transparent 60%)" }}
-				/>
-
-				<div className="max-w-6xl mx-auto relative z-10">
-					<motion.div className="mb-16" {...inView(0)}>
-						<span className="font-mono text-[11px] uppercase tracking-widest text-emerald-500 mb-3 block">
+			<section id="projects" className="py-20 px-6 bg-white border-y border-gray-100">
+				<div className="max-w-6xl mx-auto">
+					<motion.div className="mb-14" {...inView(0)}>
+						<span className="text-[11px] font-semibold uppercase tracking-widest text-emerald-600 mb-2 block">
 							What We Build
 						</span>
-						<h2 className="font-mono font-bold text-white text-4xl md:text-5xl tracking-tight leading-tight">
-							Building technology with depth,
-							<br />
-							<span className="text-emerald-400">one layer at a time.</span>
+						<h2 className="font-bold text-gray-900 text-3xl md:text-5xl tracking-tight leading-tight">
+							Building technology with depth,{" "}
+							<span className="text-emerald-600">one layer at a time.</span>
 						</h2>
 					</motion.div>
 
-					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
 						{features.map((feat, i) => (
 							<motion.div
 								key={feat.title}
-								className="group p-6 rounded-2xl border border-white/5 bg-white/3 hover:bg-white/6 hover:border-emerald-500/20 transition-all duration-300"
-								{...inView(i * 0.1)}
-								whileHover={{ y: -4 }}
+								className="group p-6 rounded-xl border border-gray-200 bg-white hover:border-emerald-300 hover:shadow-md transition-all duration-200"
+								{...inView(i * 0.08)}
 							>
-								<motion.div
-									className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-5 group-hover:bg-emerald-500/20 transition-colors duration-300"
-									whileHover={{ rotate: [0, -5, 5, 0], scale: 1.08 }}
-									transition={{ duration: 0.35 }}
-								>
-									<feat.Icon className="w-5 h-5 text-emerald-400" />
-								</motion.div>
-								<h4 className="font-mono font-semibold text-white mb-2 text-[15px]">{feat.title}</h4>
+								<div className="w-12 h-12 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-5">
+									<feat.Icon className="w-5 h-5 text-emerald-600" />
+								</div>
+								<h4 className="font-bold text-gray-900 mb-2 text-[15px]">{feat.title}</h4>
 								<p className="text-gray-500 text-sm leading-relaxed">{feat.desc}</p>
 							</motion.div>
 						))}
@@ -443,111 +407,74 @@ export default function Home() {
 			</section>
 
 			{/* ── CTA STRIP ─────────────────────────────────────────────────── */}
-			<section className="relative overflow-hidden bg-emerald-600 py-20 px-6">
-				<div
-					className="absolute inset-0 opacity-[0.06] pointer-events-none"
-					style={{
-						backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
-						backgroundSize: "28px 28px",
-					}}
-				/>
-				<motion.div className="max-w-4xl mx-auto text-center relative z-10" {...inView(0)}>
-					<span className="font-mono text-[11px] uppercase tracking-widest text-emerald-200 mb-5 block">
+			<section className="bg-emerald-600 py-20 px-6">
+				<motion.div className="max-w-4xl mx-auto text-center" {...inView(0)}>
+					<span className="font-pixel text-[10px] uppercase tracking-widest text-emerald-200 mb-4 block">
 						Open Source
 					</span>
-					<h2 className="font-mono font-bold text-white text-4xl md:text-5xl tracking-tight mb-6 leading-tight">
-						Every great project starts
-						<br />
-						with a single layer.
+					<h2 className="font-bold text-white text-3xl md:text-5xl tracking-tight mb-5 leading-tight">
+						Every great project starts with a single layer.
 					</h2>
-					<p className="text-emerald-100/80 mb-10 max-w-xl mx-auto text-lg leading-relaxed">
+					<p className="text-emerald-100 mb-10 max-w-xl mx-auto text-lg leading-relaxed">
 						Join hundreds of developers building tools that matter. No gatekeeping, no barriers —
 						just meaningful open-source contributions.
 					</p>
-					<motion.a
+					<a
 						href={DATA.github}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="inline-flex items-center gap-2 bg-white text-emerald-700 px-8 py-4 rounded-full font-mono font-semibold text-[15px] shadow-xl"
-						whileHover={{ scale: 1.05, boxShadow: "0 20px 60px rgba(0,0,0,0.2)" }}
-						whileTap={{ scale: 0.97 }}
-						transition={{ duration: 0.15 }}
+						className="inline-flex items-center gap-2.5 bg-white hover:bg-gray-50 text-emerald-700 px-8 py-4 rounded-lg font-bold text-[15px] transition-colors shadow-lg"
 					>
 						<GitHubIcon className="w-4 h-4" />
 						View on GitHub
-					</motion.a>
+					</a>
 				</motion.div>
 			</section>
 
 			{/* ── FOOTER ────────────────────────────────────────────────────── */}
-			<footer className="relative overflow-hidden bg-gray-950 py-24 px-6">
-				{/* Background glow */}
-				<motion.div
-					className="absolute top-[10%] right-[15%] w-96 h-96 rounded-full bg-emerald-500/5 blur-[120px] pointer-events-none"
-					animate={{ scale: [1, 1.3, 1] }}
-					transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-				/>
-				<motion.div
-					className="absolute bottom-[5%] left-[10%] w-80 h-80 rounded-full bg-teal-500/5 blur-[100px] pointer-events-none"
-					animate={{ scale: [1.2, 1, 1.2] }}
-					transition={{ duration: 12, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-				/>
+			<footer className="bg-gray-950 py-20 px-6">
+				<div className="max-w-6xl mx-auto">
+					<div className="flex flex-col md:flex-row gap-12 mb-16">
 
-				<div className="max-w-4xl mx-auto text-center relative z-10">
-					{/* Terminal */}
-					<div className="mb-14">
-						<CodeTerminal />
+						{/* Brand */}
+						<div className="flex-1 max-w-sm">
+							<div className="flex items-center gap-3 mb-5">
+								<Image src="/logo.svg" alt={DATA.name} width={36} height={36} className="w-9 h-9" />
+								<div>
+									<span className="font-bold text-white text-[16px] block">{DATA.name}</span>
+									<span className="font-pixel text-[9px] text-emerald-500 uppercase tracking-widest">{DATA.subtitle}</span>
+								</div>
+							</div>
+							<p className="text-gray-500 text-sm leading-relaxed mb-6">
+								Technology evolves through layers, each one building meaningful solutions for developers worldwide.
+							</p>
+							<a
+								href={DATA.github}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors"
+							>
+								<GitHubIcon className="w-4 h-4" />
+								Start Contributing
+							</a>
+						</div>
+
+						{/* Terminal */}
+						<div className="flex-1 flex justify-end">
+							<CodeTerminal />
+						</div>
 					</div>
 
-					<motion.p
-						className="text-gray-600 text-sm mb-2"
-						{...inView(0.1)}
-					>
-						Technology evolves through layers, each one building
-						<br />
-						meaningful solutions for developers.
-					</motion.p>
-
-					<motion.p
-						className="font-mono text-emerald-500 text-xs tracking-widest uppercase mb-12"
-						{...inView(0.15)}
-					>
-						kosha-nirman
-					</motion.p>
-
-					<motion.h2
-						className="font-mono font-bold text-white text-4xl md:text-5xl mb-10 tracking-tight leading-tight"
-						{...inView(0.2)}
-					>
-						Ready to contribute to
-						<br />
-						<span className="text-transparent bg-clip-text" style={{ backgroundImage: "linear-gradient(90deg, #34d399, #10b981)" }}>
-							the next layer?
-						</span>
-					</motion.h2>
-
-					<motion.div className="flex gap-4 justify-center" {...inView(0.3)}>
-						<motion.a
-							href={DATA.github}
-							target="_blank"
-							rel="noopener noreferrer"
-							className="bg-emerald-600 text-white px-8 py-4 rounded-full font-mono font-semibold text-[15px] shadow-lg shadow-emerald-900/40"
-							whileHover={{ scale: 1.05, backgroundColor: "#059669" }}
-							whileTap={{ scale: 0.97 }}
-							transition={{ duration: 0.15 }}
-						>
-							Start Contributing
-						</motion.a>
-					</motion.div>
-
-					<div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-						<p className="font-mono text-xs text-gray-700">© {currentYear} Kosha Nirman. All rights reserved.</p>
+					<div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+						<p className="font-pixel text-[10px] text-gray-700 uppercase tracking-widest">
+							© {currentYear} Kosha Nirman — All rights reserved
+						</p>
 						<div className="flex gap-6">
 							<a
 								href={DATA.github}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="font-mono text-xs text-gray-700 hover:text-emerald-500 transition-colors tracking-wide"
+								className="text-xs text-gray-600 hover:text-emerald-500 transition-colors font-medium tracking-wide"
 							>
 								GitHub
 							</a>
@@ -555,7 +482,7 @@ export default function Home() {
 								href={DATA.url}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="font-mono text-xs text-gray-700 hover:text-emerald-500 transition-colors tracking-wide"
+								className="text-xs text-gray-600 hover:text-emerald-500 transition-colors font-medium tracking-wide"
 							>
 								Website
 							</a>
