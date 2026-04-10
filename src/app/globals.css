@@ -6,9 +6,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-	--font-sans:
-		var(--font-geist), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-		"Segoe UI Symbol", "Noto Color Emoji";
+	--font-sans: var(--font-geist-pixel-square), "Geist Pixel Square", monospace;
 
 	--color-border: hsl(var(--border));
 	--color-input: hsl(var(--input));
@@ -85,8 +83,8 @@
 
 /* Properly wire Next.js font variables to Tailwind utilities */
 @theme inline {
-	--font-sans: var(--font-geist);
-	--font-mono: var(--font-geist-mono);
+	--font-sans: var(--font-geist-pixel-square);
+	--font-mono: var(--font-geist-pixel-square);
 	--font-pixel: var(--font-geist-pixel-square);
 }
 
@@ -187,6 +185,7 @@
 @layer base {
 	* {
 		@apply border-border;
+		font-family: var(--font-geist-pixel-square), "Geist Pixel Square", monospace;
 	}
 	body {
 		@apply bg-background text-foreground;

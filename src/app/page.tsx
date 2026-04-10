@@ -28,7 +28,7 @@ const cards = [
 		title: "Contributors",
 		desc: "Join our community of developers building impactful tools. Contribute code, documentation, or ideas to projects that enhance productivity worldwide.",
 		link: "Start Contributing",
-		dot: "bg-orange-500",
+		dot: "bg-emerald-400",
 	},
 	{
 		num: "02",
@@ -36,7 +36,7 @@ const cards = [
 		title: "Maintainers",
 		desc: "Take ownership of projects and help guide their development. Lead initiatives, mentor contributors, and shape the future of our ecosystem.",
 		link: "Learn More",
-		dot: "bg-gray-500",
+		dot: "bg-green-600",
 	},
 	{
 		num: "03",
@@ -44,7 +44,7 @@ const cards = [
 		title: "Community Builders",
 		desc: "Help grow our community by creating content, organizing events, and connecting developers. Share knowledge across our ecosystem.",
 		link: "Get Involved",
-		dot: "bg-purple-500",
+		dot: "bg-teal-500",
 	},
 	{
 		num: "04",
@@ -73,10 +73,10 @@ const stats = [
 
 /* ─── layer stack visual ────────────────────────────────────────────── */
 const layers = [
-	{ icon: CodeIcon,  label: "Open Source",     sub: "MIT Licensed",      color: "bg-blue-50   border-blue-100",   dot: "bg-blue-500"    },
-	{ icon: ToolsIcon, label: "Developer Tools",  sub: "Zero Friction",     color: "bg-amber-50  border-amber-100",  dot: "bg-amber-500"   },
-	{ icon: GlobeIcon, label: "Community Driven", sub: "Built Together",    color: "bg-purple-50 border-purple-100", dot: "bg-purple-500"  },
-	{ icon: BookIcon,  label: "Documentation",    sub: "Always Current",    color: "bg-emerald-50 border-emerald-100", dot: "bg-emerald-500" },
+	{ icon: CodeIcon,  label: "Open Source",     sub: "MIT Licensed",      color: "bg-emerald-50 border-emerald-100",  dot: "bg-emerald-400"  },
+	{ icon: ToolsIcon, label: "Developer Tools",  sub: "Zero Friction",     color: "bg-green-50   border-green-100",    dot: "bg-green-500"    },
+	{ icon: GlobeIcon, label: "Community Driven", sub: "Built Together",    color: "bg-teal-50    border-teal-100",     dot: "bg-teal-500"     },
+	{ icon: BookIcon,  label: "Documentation",    sub: "Always Current",    color: "bg-emerald-50 border-emerald-100",  dot: "bg-emerald-600"  },
 ];
 
 // pos 0 = front (bottom of stack), pos N-1 = back (top, most hidden)
@@ -136,15 +136,15 @@ function LayerStack() {
 /* ─── code terminal ─────────────────────────────────────────────────── */
 function CodeTerminal() {
 	const lines = [
-		{ indent: 0, tokens: [{ text: "while", color: "text-purple-400" }, { text: " {", color: "text-gray-400" }] },
-		{ indent: 4, tokens: [{ text: "build", color: "text-blue-400" }, { text: "()", color: "text-gray-400" }] },
+		{ indent: 0, tokens: [{ text: "while", color: "text-teal-400" }, { text: " {", color: "text-gray-400" }] },
+		{ indent: 4, tokens: [{ text: "build", color: "text-green-400" }, { text: "()", color: "text-gray-400" }] },
 		{ indent: 0, tokens: [{ text: "}", color: "text-gray-400" }] },
 		{
 			indent: 0,
 			tokens: [
 				{ text: "create", color: "text-emerald-400" },
 				{ text: "(", color: "text-gray-400" },
-				{ text: "layers", color: "text-amber-300" },
+				{ text: "layers", color: "text-emerald-300" },
 				{ text: ")", color: "text-gray-400" },
 			],
 		},
