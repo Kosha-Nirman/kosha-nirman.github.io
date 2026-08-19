@@ -244,8 +244,34 @@ export default function Home() {
 			</motion.nav>
 
 			{/* ── HERO ──────────────────────────────────────────────────────── */}
-			<section className="bg-white border-b border-gray-100">
-				<div className="max-w-7xl mx-auto px-6 py-14 md:py-28 flex flex-col md:flex-row items-center gap-10 md:gap-16">
+			<section
+				className="relative bg-white border-b border-gray-100 overflow-hidden"
+				style={{
+					backgroundImage: "radial-gradient(circle, rgba(202,117,43,0.09) 1px, transparent 1px)",
+					backgroundSize: "22px 22px",
+				}}
+			>
+				{/* Corner rivets — riveted-plate detail */}
+				{[
+					"top-6 left-6",
+					"top-6 right-6",
+					"bottom-6 left-6",
+					"bottom-6 right-6",
+				].map((pos) => (
+					<span
+						key={pos}
+						aria-hidden="true"
+						className={`hidden md:block absolute w-2.5 h-2.5 rounded-full ${pos}`}
+						style={{
+							background:
+								"radial-gradient(circle at 34% 30%, #e8a260 0%, #CA752B 45%, #7a4419 100%)",
+							boxShadow:
+								"inset 0 -1px 1.5px rgba(0,0,0,0.55), inset 0 1px 1px rgba(255,255,255,0.3)",
+						}}
+					/>
+				))}
+
+				<div className="relative max-w-7xl mx-auto px-6 py-14 md:py-28 flex flex-col md:flex-row items-center gap-10 md:gap-16">
 
 					{/* Left copy */}
 					<div className="w-full md:flex-1 md:max-w-xl">
@@ -253,7 +279,14 @@ export default function Home() {
 							className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-4 py-1.5 mb-6 md:mb-8"
 							{...fadeUp(0.1)}
 						>
-							<span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
+							<span className="relative flex w-2 h-2 shrink-0">
+								<motion.span
+									className="absolute inset-0 rounded-full bg-amber-400"
+									animate={{ scale: [1, 2.2], opacity: [0.6, 0] }}
+									transition={{ duration: 1.8, repeat: Number.POSITIVE_INFINITY, ease: "easeOut" }}
+								/>
+								<span className="relative w-2 h-2 rounded-full bg-amber-500" />
+							</span>
 							<span className="font-pixel text-[10px] uppercase tracking-widest text-amber-700">
 								Riveted Together
 							</span>
@@ -264,7 +297,9 @@ export default function Home() {
 							{...fadeUp(0.2)}
 						>
 							Build Deeper.{" "}
-							<span className="text-amber-600 block">Impact Stronger.</span>
+							<span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-600 to-orange-500">
+								Impact Stronger.
+							</span>
 						</motion.h1>
 
 						<motion.p
@@ -276,18 +311,24 @@ export default function Home() {
 						</motion.p>
 
 						<motion.div className="flex gap-3 flex-wrap" {...fadeUp(0.45)}>
-							<a
+							<motion.a
 								href="#projects"
-								className="bg-amber-600 hover:bg-amber-700 text-white px-7 py-3.5 rounded-lg font-semibold text-[15px] transition-colors inline-block"
+								className="bg-amber-600 hover:bg-amber-700 text-white px-7 py-3.5 rounded-lg font-semibold text-[15px] shadow-md shadow-amber-600/20 hover:shadow-lg hover:shadow-amber-600/30 transition-colors inline-block"
+								whileHover={{ y: -2 }}
+								whileTap={{ scale: 0.98 }}
+								transition={{ duration: 0.15 }}
 							>
 								Explore Projects
-							</a>
-							<a
+							</motion.a>
+							<motion.a
 								href="#contribute"
-								className="border-2 border-gray-200 hover:border-gray-300 text-gray-700 hover:text-gray-900 px-7 py-3.5 rounded-lg font-semibold text-[15px] transition-colors inline-block"
+								className="border-2 border-gray-200 hover:border-amber-300 text-gray-700 hover:text-gray-900 px-7 py-3.5 rounded-lg font-semibold text-[15px] transition-colors inline-block"
+								whileHover={{ y: -2 }}
+								whileTap={{ scale: 0.98 }}
+								transition={{ duration: 0.15 }}
 							>
 								Contribute →
-							</a>
+							</motion.a>
 						</motion.div>
 
 						{/* Stats row */}
