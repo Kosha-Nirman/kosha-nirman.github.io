@@ -28,7 +28,7 @@ const cards = [
 		title: "Contributors",
 		desc: "Join our community of developers building impactful tools. Contribute code, documentation, or ideas to projects that enhance productivity worldwide.",
 		link: "Start Contributing",
-		dot: "bg-emerald-400",
+		dot: "bg-amber-400",
 	},
 	{
 		num: "02",
@@ -36,7 +36,7 @@ const cards = [
 		title: "Maintainers",
 		desc: "Take ownership of projects and help guide their development. Lead initiatives, mentor contributors, and shape the future of our ecosystem.",
 		link: "Learn More",
-		dot: "bg-green-600",
+		dot: "bg-orange-600",
 	},
 	{
 		num: "03",
@@ -44,7 +44,7 @@ const cards = [
 		title: "Community Builders",
 		desc: "Help grow our community by creating content, organizing events, and connecting developers. Share knowledge across our ecosystem.",
 		link: "Get Involved",
-		dot: "bg-teal-500",
+		dot: "bg-yellow-500",
 	},
 	{
 		num: "04",
@@ -52,7 +52,7 @@ const cards = [
 		title: "Technical Writers",
 		desc: "Craft comprehensive guides and documentation that help developers understand and use our tools. Make complex concepts accessible to everyone.",
 		link: "Start Writing",
-		dot: "bg-emerald-500",
+		dot: "bg-amber-500",
 	},
 ];
 
@@ -73,10 +73,10 @@ const stats = [
 
 /* ─── layer stack visual ────────────────────────────────────────────── */
 const layers = [
-	{ icon: CodeIcon,  label: "Open Source",     sub: "MIT Licensed",      color: "bg-emerald-50 border-emerald-100",  dot: "bg-emerald-400"  },
-	{ icon: ToolsIcon, label: "Developer Tools",  sub: "Zero Friction",     color: "bg-green-50   border-green-100",    dot: "bg-green-500"    },
-	{ icon: GlobeIcon, label: "Community Driven", sub: "Built Together",    color: "bg-teal-50    border-teal-100",     dot: "bg-teal-500"     },
-	{ icon: BookIcon,  label: "Documentation",    sub: "Always Current",    color: "bg-emerald-50 border-emerald-100",  dot: "bg-emerald-600"  },
+	{ icon: CodeIcon,  label: "Open Source",     sub: "MIT Licensed",      color: "bg-amber-50 border-amber-100",  dot: "bg-amber-400"  },
+	{ icon: ToolsIcon, label: "Developer Tools",  sub: "Zero Friction",     color: "bg-orange-50   border-orange-100",    dot: "bg-orange-500"    },
+	{ icon: GlobeIcon, label: "Community Driven", sub: "Built Together",    color: "bg-yellow-50    border-yellow-100",     dot: "bg-yellow-500"     },
+	{ icon: BookIcon,  label: "Documentation",    sub: "Always Current",    color: "bg-amber-50 border-amber-100",  dot: "bg-amber-600"  },
 ];
 
 // pos 0 = front (bottom of stack), pos N-1 = back (top, most hidden)
@@ -136,15 +136,15 @@ function LayerStack() {
 /* ─── code terminal ─────────────────────────────────────────────────── */
 function CodeTerminal() {
 	const lines = [
-		{ indent: 0, tokens: [{ text: "while", color: "text-teal-400" }, { text: " {", color: "text-gray-400" }] },
-		{ indent: 4, tokens: [{ text: "build", color: "text-green-400" }, { text: "()", color: "text-gray-400" }] },
+		{ indent: 0, tokens: [{ text: "while", color: "text-yellow-400" }, { text: " {", color: "text-gray-400" }] },
+		{ indent: 4, tokens: [{ text: "build", color: "text-orange-400" }, { text: "()", color: "text-gray-400" }] },
 		{ indent: 0, tokens: [{ text: "}", color: "text-gray-400" }] },
 		{
 			indent: 0,
 			tokens: [
-				{ text: "create", color: "text-emerald-400" },
+				{ text: "create", color: "text-amber-400" },
 				{ text: "(", color: "text-gray-400" },
-				{ text: "layers", color: "text-emerald-300" },
+				{ text: "layers", color: "text-amber-300" },
 				{ text: ")", color: "text-gray-400" },
 			],
 		},
@@ -156,8 +156,8 @@ function CodeTerminal() {
 			<div className="flex items-center gap-1.5 px-4 py-3 bg-gray-900 border-b border-gray-800">
 				<span className="w-3 h-3 rounded-full bg-red-500/80" />
 				<span className="w-3 h-3 rounded-full bg-yellow-500/80" />
-				<span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-				<span className="ml-auto font-pixel text-[10px] text-gray-500 tracking-wider">kosha.sh</span>
+				<span className="w-3 h-3 rounded-full bg-green-500/80" />
+				<span className="ml-auto font-pixel text-[10px] text-gray-500 tracking-wider">rivetron.sh</span>
 			</div>
 			{/* Lines */}
 			<div className="p-5 space-y-2">
@@ -192,8 +192,8 @@ function CodeTerminal() {
 				>
 					<span className="text-gray-700 font-mono text-sm mr-4 w-4 shrink-0 text-right">5</span>
 					<span className="inline-flex items-center gap-1">
-						<span className="text-emerald-500 font-mono text-sm">$</span>
-						<span className="w-2 h-4 bg-emerald-500/80 animate-cursor-blink" />
+						<span className="text-amber-500 font-mono text-sm">$</span>
+						<span className="w-2 h-4 bg-amber-500/80 animate-cursor-blink" />
 					</span>
 				</motion.div>
 			</div>
@@ -220,7 +220,7 @@ export default function Home() {
 						<Image src="/logo.svg" alt={DATA.name} width={36} height={36} className="w-9 h-9" />
 						<div className="leading-none">
 							<span className="font-bold text-[16px] text-gray-900 block tracking-tight">{DATA.name}</span>
-							<span className="font-pixel text-[9px] text-emerald-600 tracking-widest uppercase">{DATA.subtitle}</span>
+							<span className="font-pixel text-[9px] text-amber-600 tracking-widest uppercase">{DATA.subtitle}</span>
 						</div>
 					</div>
 
@@ -235,7 +235,7 @@ export default function Home() {
 							href={DATA.github}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold inline-flex items-center gap-2 transition-colors"
+							className="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold inline-flex items-center gap-2 transition-colors"
 						>
 							<GitHubIcon className="w-4 h-4" /> GitHub
 						</a>
@@ -250,12 +250,12 @@ export default function Home() {
 					{/* Left copy */}
 					<div className="w-full md:flex-1 md:max-w-xl">
 						<motion.div
-							className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-full px-4 py-1.5 mb-6 md:mb-8"
+							className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-4 py-1.5 mb-6 md:mb-8"
 							{...fadeUp(0.1)}
 						>
-							<span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-							<span className="font-pixel text-[10px] uppercase tracking-widest text-emerald-700">
-								The Creation of Layers
+							<span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
+							<span className="font-pixel text-[10px] uppercase tracking-widest text-amber-700">
+								Riveted Together
 							</span>
 						</motion.div>
 
@@ -264,21 +264,21 @@ export default function Home() {
 							{...fadeUp(0.2)}
 						>
 							Build Deeper.{" "}
-							<span className="text-emerald-600 block">Impact Stronger.</span>
+							<span className="text-amber-600 block">Impact Stronger.</span>
 						</motion.h1>
 
 						<motion.p
 							className="text-gray-500 text-lg md:text-xl mb-10 leading-relaxed"
 							{...fadeUp(0.35)}
 						>
-							Kosha Nirman crafts open-source tools and systems with depth — every layer
-							contributes to meaningful solutions that empower developers and businesses.
+							Rivetron crafts open-source tools and systems built to hold — every layer
+							riveted into place for developers and businesses.
 						</motion.p>
 
 						<motion.div className="flex gap-3 flex-wrap" {...fadeUp(0.45)}>
 							<a
 								href="#projects"
-								className="bg-emerald-600 hover:bg-emerald-700 text-white px-7 py-3.5 rounded-lg font-semibold text-[15px] transition-colors inline-block"
+								className="bg-amber-600 hover:bg-amber-700 text-white px-7 py-3.5 rounded-lg font-semibold text-[15px] transition-colors inline-block"
 							>
 								Explore Projects
 							</a>
@@ -310,7 +310,7 @@ export default function Home() {
 			</section>
 
 			{/* ── TICKER ────────────────────────────────────────────────────── */}
-			<div className="bg-emerald-600 py-3 overflow-hidden">
+			<div className="bg-amber-600 py-3 overflow-hidden">
 				<motion.div
 					className="flex gap-12 whitespace-nowrap"
 					animate={{ x: ["0%", "-50%"] }}
@@ -318,9 +318,9 @@ export default function Home() {
 				>
 					{[...ticker, ...ticker].map((item, i) => (
 						// biome-ignore lint/suspicious/noArrayIndexKey: duplicated ticker
-						<span key={i} className="font-pixel text-[10px] uppercase tracking-widest text-emerald-100 shrink-0">
+						<span key={i} className="font-pixel text-[10px] uppercase tracking-widest text-amber-100 shrink-0">
 							{item}
-							<span className="mx-6 text-emerald-300/60">·</span>
+							<span className="mx-6 text-amber-300/60">·</span>
 						</span>
 					))}
 				</motion.div>
@@ -330,7 +330,7 @@ export default function Home() {
 			<section id="contribute" className="py-20 px-6 bg-[#f0f2f5]">
 				<div className="max-w-6xl mx-auto">
 					<motion.div className="mb-12" {...inView(0)}>
-						<span className="text-[11px] font-semibold uppercase tracking-widest text-emerald-600 mb-2 block">
+						<span className="text-[11px] font-semibold uppercase tracking-widest text-amber-600 mb-2 block">
 							Community
 						</span>
 						<h2 className="font-bold text-gray-900 text-3xl md:text-5xl tracking-tight">
@@ -364,7 +364,7 @@ export default function Home() {
 									<h3 className="font-bold text-gray-900 text-2xl mb-3 tracking-tight">{card.title}</h3>
 									<p className="text-gray-500 text-sm leading-relaxed mb-6">{card.desc}</p>
 
-									<span className="inline-flex items-center gap-1.5 font-semibold text-sm text-emerald-600 group-hover:gap-3 transition-all duration-200">
+									<span className="inline-flex items-center gap-1.5 font-semibold text-sm text-amber-600 group-hover:gap-3 transition-all duration-200">
 										{card.link}
 										<span className="transition-transform group-hover:translate-x-1">→</span>
 									</span>
@@ -379,12 +379,12 @@ export default function Home() {
 			<section id="projects" className="py-20 px-6 bg-white border-y border-gray-100">
 				<div className="max-w-6xl mx-auto">
 					<motion.div className="mb-14" {...inView(0)}>
-						<span className="text-[11px] font-semibold uppercase tracking-widest text-emerald-600 mb-2 block">
+						<span className="text-[11px] font-semibold uppercase tracking-widest text-amber-600 mb-2 block">
 							What We Build
 						</span>
 						<h2 className="font-bold text-gray-900 text-3xl md:text-5xl tracking-tight leading-tight">
 							Building technology with depth,{" "}
-							<span className="text-emerald-600">one layer at a time.</span>
+							<span className="text-amber-600">one layer at a time.</span>
 						</h2>
 					</motion.div>
 
@@ -392,11 +392,11 @@ export default function Home() {
 						{features.map((feat, i) => (
 							<motion.div
 								key={feat.title}
-								className="group p-6 rounded-xl border border-gray-200 bg-white hover:border-emerald-300 hover:shadow-md transition-all duration-200"
+								className="group p-6 rounded-xl border border-gray-200 bg-white hover:border-amber-300 hover:shadow-md transition-all duration-200"
 								{...inView(i * 0.08)}
 							>
-								<div className="w-12 h-12 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-5">
-									<feat.Icon className="w-5 h-5 text-emerald-600" />
+								<div className="w-12 h-12 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center mb-5">
+									<feat.Icon className="w-5 h-5 text-amber-600" />
 								</div>
 								<h4 className="font-bold text-gray-900 mb-2 text-[15px]">{feat.title}</h4>
 								<p className="text-gray-500 text-sm leading-relaxed">{feat.desc}</p>
@@ -407,15 +407,15 @@ export default function Home() {
 			</section>
 
 			{/* ── CTA STRIP ─────────────────────────────────────────────────── */}
-			<section className="bg-emerald-600 py-20 px-6">
+			<section className="bg-amber-600 py-20 px-6">
 				<motion.div className="max-w-4xl mx-auto text-center" {...inView(0)}>
-					<span className="font-pixel text-[10px] uppercase tracking-widest text-emerald-200 mb-4 block">
+					<span className="font-pixel text-[10px] uppercase tracking-widest text-amber-200 mb-4 block">
 						Open Source
 					</span>
 					<h2 className="font-bold text-white text-3xl md:text-5xl tracking-tight mb-5 leading-tight">
 						Every great project starts with a single layer.
 					</h2>
-					<p className="text-emerald-100 mb-10 max-w-xl mx-auto text-lg leading-relaxed">
+					<p className="text-amber-100 mb-10 max-w-xl mx-auto text-lg leading-relaxed">
 						Join hundreds of developers building tools that matter. No gatekeeping, no barriers —
 						just meaningful open-source contributions.
 					</p>
@@ -423,7 +423,7 @@ export default function Home() {
 						href={DATA.github}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="inline-flex items-center gap-2.5 bg-white hover:bg-gray-50 text-emerald-700 px-8 py-4 rounded-lg font-bold text-[15px] transition-colors shadow-lg"
+						className="inline-flex items-center gap-2.5 bg-white hover:bg-gray-50 text-amber-700 px-8 py-4 rounded-lg font-bold text-[15px] transition-colors shadow-lg"
 					>
 						<GitHubIcon className="w-4 h-4" />
 						View on GitHub
@@ -442,7 +442,7 @@ export default function Home() {
 								<Image src="/logo.svg" alt={DATA.name} width={36} height={36} className="w-9 h-9" />
 								<div>
 									<span className="font-bold text-white text-[16px] block">{DATA.name}</span>
-									<span className="font-pixel text-[9px] text-emerald-500 uppercase tracking-widest">{DATA.subtitle}</span>
+									<span className="font-pixel text-[9px] text-amber-500 uppercase tracking-widest">{DATA.subtitle}</span>
 								</div>
 							</div>
 							<p className="text-gray-500 text-sm leading-relaxed mb-6">
@@ -452,7 +452,7 @@ export default function Home() {
 								href={DATA.github}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors"
+								className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors"
 							>
 								<GitHubIcon className="w-4 h-4" />
 								Start Contributing
@@ -467,14 +467,14 @@ export default function Home() {
 
 					<div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
 						<p className="font-pixel text-[10px] text-gray-700 uppercase tracking-widest">
-							© {currentYear} Kosha Nirman — All rights reserved
+							© {currentYear} Rivetron — All rights reserved
 						</p>
 						<div className="flex gap-6">
 							<a
 								href={DATA.github}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="text-xs text-gray-600 hover:text-emerald-500 transition-colors font-medium tracking-wide"
+								className="text-xs text-gray-600 hover:text-amber-500 transition-colors font-medium tracking-wide"
 							>
 								GitHub
 							</a>
@@ -482,7 +482,7 @@ export default function Home() {
 								href={DATA.url}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="text-xs text-gray-600 hover:text-emerald-500 transition-colors font-medium tracking-wide"
+								className="text-xs text-gray-600 hover:text-amber-500 transition-colors font-medium tracking-wide"
 							>
 								Website
 							</a>

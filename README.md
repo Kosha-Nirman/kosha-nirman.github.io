@@ -3,14 +3,16 @@
 </p>
 
 <p align="center">
-  <a href="https://kosha-nirman.github.io">Website</a> •
-  <a href="https://github.com/Kosha-Nirman">GitHub</a> •
+  <a href="https://rivetron.github.io">Website</a> •
+  <a href="https://github.com/Rivetron">GitHub</a> •
   <a href="#contributing">Contribute</a>
 </p>
 
 ## 🎯 About
 
-Kosha Nirman (कोष निर्माण) — "The Creation of Layers" — is a space dedicated to building tools, systems, and experiences that empower developers and businesses. Our mission is to craft technology with depth, where every layer contributes to meaningful and impactful solutions.
+Rivetron is a space dedicated to building tools, systems, and experiences that empower developers and businesses. Our mission is to craft technology that's riveted together — built to hold, layer by layer, into meaningful and impactful solutions.
+
+We renamed from Kosha Nirman to Rivetron to move away from the old Sanskrit name toward something shorter and more direct — built the way old electronics brands were named, no translation required.
 
 ## 🚀 Features
 
@@ -22,11 +24,11 @@ Kosha Nirman (कोष निर्माण) — "The Creation of Layers" — 
 
 ## 🤝 Contact
 
-- GitHub Organization: [@Kosha-Nirman](https://github.com/Kosha-Nirman)
-- Website: [kosha-nirman.github.io](https://kosha-nirman.github.io)
+- GitHub Organization: [@Rivetron](https://github.com/Rivetron)
+- Website: [rivetron.github.io](https://rivetron.github.io)
 
 ---
 
 <p align="center">
-  Made with ❤️ by Kosha Nirman Team
+  Made with ❤️ by Rivetron Team
 </p>

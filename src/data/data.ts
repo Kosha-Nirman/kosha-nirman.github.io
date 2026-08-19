@@ -1,11 +1,11 @@
 export const DATA = {
-	name: "Kosha Nirman",
+	name: "Rivetron",
 	description:
-		"The Creation of Layers — Building tools, systems, and experiences that empower developers and businesses",
-	subtitle: "कोष निर्माण",
-	url: "https://kosha-nirman.github.io",
-	github: "https://github.com/Kosha-Nirman",
-	repositories: "https://github.com/orgs/Kosha-Nirman/repositories",
+		"Riveted Together — Building tools, systems, and experiences that empower developers and businesses",
+	subtitle: "RVT-01",
+	url: "https://rivetron.github.io",
+	github: "https://github.com/Rivetron",
+	repositories: "https://github.com/orgs/Rivetron/repositories",
 	features: [
 		{
 			title: "Open Source",
