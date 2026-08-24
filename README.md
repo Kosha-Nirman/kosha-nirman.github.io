@@ -22,6 +22,10 @@ We renamed from Kosha Nirman to Rivetron to move away from the old Sanskrit name
 - 📚 **Documentation**: Comprehensive guides and documentation for all projects
 
 
+## 🙏 Credits
+
+- The homepage hero's interactive keypad is inspired by [jh3y's "Interactive Keypad with Key Recorder + SFX"](https://codepen.io/jh3y/pen/WbQNxXb) on CodePen.
+
 ## 🤝 Contact
 
 - GitHub Organization: [@Rivetron](https://github.com/Rivetron)
