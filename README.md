@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://rivetron.github.io">Website</a> •
-  <a href="https://github.com/Rivetron">GitHub</a> •
+  <a href="https://github.com/rivetron">GitHub</a> •
   <a href="#contributing">Contribute</a>
 </p>
 
@@ -28,7 +28,7 @@ We renamed from Kosha Nirman to Rivetron to move away from the old Sanskrit name
 
 ## 🤝 Contact
 
-- GitHub Organization: [@Rivetron](https://github.com/Rivetron)
+- GitHub Organization: [@rivetron](https://github.com/rivetron)
 - Website: [rivetron.github.io](https://rivetron.github.io)
 
 ---

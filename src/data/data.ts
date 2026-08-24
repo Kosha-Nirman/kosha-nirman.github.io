@@ -1,11 +1,11 @@
 export const DATA = {
-	name: "Rivetron",
+	name: "rivetron",
 	description:
 		"Riveted Together — Building tools, systems, and experiences that empower developers and businesses",
 	subtitle: "RVT-01",
 	url: "https://rivetron.github.io",
-	github: "https://github.com/Rivetron",
-	repositories: "https://github.com/orgs/Rivetron/repositories",
+	github: "https://github.com/rivetron",
+	repositories: "https://github.com/orgs/rivetron/repositories",
 	features: [
 		{
 			title: "Open Source",
