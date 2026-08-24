@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import Image from "next/image";
+import { MechanicalKeys } from "@/components/animated/MechanicalKeys";
 import { BookIcon, CodeIcon, GitHubIcon, GlobeIcon, ToolsIcon } from "@/components/icons/Icons";
 import { DATA } from "@/data/data";
 
@@ -57,13 +57,36 @@ const cards = [
 ];
 
 const features = [
-	{ Icon: CodeIcon, title: "Open Source", desc: "Fully transparent, open, and community-auditable by default" },
-	{ Icon: ToolsIcon, title: "Developer Tools", desc: "Utilities built to eliminate friction in every workflow" },
-	{ Icon: GlobeIcon, title: "Community Driven", desc: "Every contributor shapes the direction of the project" },
-	{ Icon: BookIcon, title: "Documentation", desc: "Guides that make complex ideas accessible to everyone" },
+	{
+		Icon: CodeIcon,
+		title: "Open Source",
+		desc: "Fully transparent, open, and community-auditable by default",
+	},
+	{
+		Icon: ToolsIcon,
+		title: "Developer Tools",
+		desc: "Utilities built to eliminate friction in every workflow",
+	},
+	{
+		Icon: GlobeIcon,
+		title: "Community Driven",
+		desc: "Every contributor shapes the direction of the project",
+	},
+	{
+		Icon: BookIcon,
+		title: "Documentation",
+		desc: "Guides that make complex ideas accessible to everyone",
+	},
 ];
 
-const ticker = ["100% Open Source", "Community Driven", "Developer First", "Zero Barriers", "Build Deeper", "Impact Stronger"];
+const ticker = [
+	"100% Open Source",
+	"Community Driven",
+	"Developer First",
+	"Zero Barriers",
+	"Build Deeper",
+	"Impact Stronger",
+];
 
 const stats = [
 	{ value: "100%", label: "Open Source" },
@@ -71,73 +94,23 @@ const stats = [
 	{ value: "0", label: "Barriers" },
 ];
 
-/* ─── layer stack visual ────────────────────────────────────────────── */
-const layers = [
-	{ icon: CodeIcon,  label: "Open Source",     sub: "MIT Licensed",      color: "bg-amber-50 border-amber-100",  dot: "bg-amber-400"  },
-	{ icon: ToolsIcon, label: "Developer Tools",  sub: "Zero Friction",     color: "bg-orange-50   border-orange-100",    dot: "bg-orange-500"    },
-	{ icon: GlobeIcon, label: "Community Driven", sub: "Built Together",    color: "bg-yellow-50    border-yellow-100",     dot: "bg-yellow-500"     },
-	{ icon: BookIcon,  label: "Documentation",    sub: "Always Current",    color: "bg-amber-50 border-amber-100",  dot: "bg-amber-600"  },
-];
-
-// pos 0 = front (bottom of stack), pos N-1 = back (top, most hidden)
-const STACK_CONFIG = [
-	{ y: 0,   scale: 1,    opacity: 1,    zIndex: 4, shadow: "shadow-lg"  },
-	{ y: -16, scale: 0.96, opacity: 0.75, zIndex: 3, shadow: "shadow-md"  },
-	{ y: -30, scale: 0.92, opacity: 0.5,  zIndex: 2, shadow: "shadow-sm"  },
-	{ y: -42, scale: 0.88, opacity: 0.3,  zIndex: 1, shadow: "shadow-none" },
-];
-
-function LayerStack() {
-	const [front, setFront] = useState(0);
-	const n = layers.length;
-
-	useEffect(() => {
-		const id = setInterval(() => setFront((f) => (f + 1) % n), 2000);
-		return () => clearInterval(id);
-	}, [n]);
-
-	return (
-		<div className="relative w-full max-w-sm mx-auto" style={{ height: 130, overflow: "visible" }}>
-			{layers.map((layer, i) => {
-				// how far back is this card from the current front?
-				const pos = (i - front + n) % n;
-				const cfg = STACK_CONFIG[pos];
-				return (
-					<motion.div
-						key={layer.label}
-						className={`absolute left-0 right-0 flex items-center gap-4 px-5 py-4 rounded-xl border-2 bg-white ${cfg.shadow} ${layer.color}`}
-						style={{ top: 42 }} // base y so back-cards peek above
-						animate={{
-							y:       cfg.y,
-							scale:   cfg.scale,
-							opacity: cfg.opacity,
-							zIndex:  cfg.zIndex,
-						}}
-						transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-					>
-						<div className={`w-10 h-10 rounded-lg ${layer.color} border flex items-center justify-center shrink-0`}>
-							<layer.icon className="w-5 h-5 text-gray-700" />
-						</div>
-						<div className="flex-1 min-w-0">
-							<div className="font-semibold text-gray-900 text-sm leading-tight">{layer.label}</div>
-							<div className="text-gray-400 text-xs mt-0.5">{layer.sub}</div>
-						</div>
-						<div className="flex items-center gap-1.5 shrink-0">
-							<span className={`w-2 h-2 rounded-full ${layer.dot}`} />
-							<span className="font-pixel text-[9px] text-gray-400 uppercase tracking-widest">Active</span>
-						</div>
-					</motion.div>
-				);
-			})}
-		</div>
-	);
-}
-
 /* ─── code terminal ─────────────────────────────────────────────────── */
 function CodeTerminal() {
 	const lines = [
-		{ indent: 0, tokens: [{ text: "while", color: "text-yellow-400" }, { text: " {", color: "text-gray-400" }] },
-		{ indent: 4, tokens: [{ text: "build", color: "text-orange-400" }, { text: "()", color: "text-gray-400" }] },
+		{
+			indent: 0,
+			tokens: [
+				{ text: "while", color: "text-yellow-400" },
+				{ text: " {", color: "text-gray-400" },
+			],
+		},
+		{
+			indent: 4,
+			tokens: [
+				{ text: "build", color: "text-orange-400" },
+				{ text: "()", color: "text-gray-400" },
+			],
+		},
 		{ indent: 0, tokens: [{ text: "}", color: "text-gray-400" }] },
 		{
 			indent: 0,
@@ -157,7 +130,9 @@ function CodeTerminal() {
 				<span className="w-3 h-3 rounded-full bg-red-500/80" />
 				<span className="w-3 h-3 rounded-full bg-yellow-500/80" />
 				<span className="w-3 h-3 rounded-full bg-green-500/80" />
-				<span className="ml-auto font-pixel text-[10px] text-gray-500 tracking-wider">rivetron.sh</span>
+				<span className="ml-auto font-pixel text-[10px] text-gray-500 tracking-wider">
+					rivetron.sh
+				</span>
 			</div>
 			{/* Lines */}
 			<div className="p-5 space-y-2">
@@ -171,7 +146,9 @@ function CodeTerminal() {
 						viewport={{ once: true }}
 						transition={{ duration: 0.4, delay: 0.2 + i * 0.18 }}
 					>
-						<span className="text-gray-700 font-mono text-sm mr-4 w-4 shrink-0 text-right">{i + 1}</span>
+						<span className="text-gray-700 font-mono text-sm mr-4 w-4 shrink-0 text-right">
+							{i + 1}
+						</span>
 						<span style={{ paddingLeft: `${line.indent * 0.5}rem` }} className="font-mono text-sm">
 							{line.tokens.map((t, j) => (
 								// biome-ignore lint/suspicious/noArrayIndexKey: static token list
@@ -207,7 +184,6 @@ export default function Home() {
 
 	return (
 		<div className="min-h-screen bg-white text-gray-900">
-
 			{/* ── NAV ───────────────────────────────────────────────────────── */}
 			<motion.nav
 				className="sticky top-0 z-50 w-full bg-white border-b border-gray-200"
@@ -219,16 +195,26 @@ export default function Home() {
 					<div className="flex items-center gap-3 cursor-pointer">
 						<Image src="/logo.svg" alt={DATA.name} width={36} height={36} className="w-9 h-9" />
 						<div className="leading-none">
-							<span className="font-bold text-[16px] text-gray-900 block tracking-tight">{DATA.name}</span>
-							<span className="font-pixel text-[9px] text-amber-600 tracking-widest uppercase">{DATA.subtitle}</span>
+							<span className="font-bold text-[16px] text-gray-900 block tracking-tight">
+								{DATA.name}
+							</span>
+							<span className="font-pixel text-[9px] text-amber-600 tracking-widest uppercase">
+								{DATA.subtitle}
+							</span>
 						</div>
 					</div>
 
 					<div className="hidden md:flex items-center gap-8">
-						<a href="#contribute" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+						<a
+							href="#contribute"
+							className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+						>
 							Contribute
 						</a>
-						<a href="#projects" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+						<a
+							href="#projects"
+							className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+						>
 							Projects
 						</a>
 						<a
@@ -252,12 +238,7 @@ export default function Home() {
 				}}
 			>
 				{/* Corner rivets — riveted-plate detail */}
-				{[
-					"top-6 left-6",
-					"top-6 right-6",
-					"bottom-6 left-6",
-					"bottom-6 right-6",
-				].map((pos) => (
+				{["top-6 left-6", "top-6 right-6", "bottom-6 left-6", "bottom-6 right-6"].map((pos) => (
 					<span
 						key={pos}
 						aria-hidden="true"
@@ -272,7 +253,6 @@ export default function Home() {
 				))}
 
 				<div className="relative max-w-7xl mx-auto px-6 py-14 md:py-28 flex flex-col md:flex-row items-center gap-10 md:gap-16">
-
 					{/* Left copy */}
 					<div className="w-full md:flex-1 md:max-w-xl">
 						<motion.div
@@ -306,8 +286,8 @@ export default function Home() {
 							className="text-gray-500 text-lg md:text-xl mb-10 leading-relaxed"
 							{...fadeUp(0.35)}
 						>
-							Rivetron crafts open-source tools and systems built to hold — every layer
-							riveted into place for developers and businesses.
+							Rivetron crafts open-source tools and systems built to hold — every layer riveted into
+							place for developers and businesses.
 						</motion.p>
 
 						<motion.div className="flex gap-3 flex-wrap" {...fadeUp(0.45)}>
@@ -332,7 +312,10 @@ export default function Home() {
 						</motion.div>
 
 						{/* Stats row */}
-						<motion.div className="flex gap-8 mt-12 pt-10 border-t border-gray-100" {...fadeUp(0.55)}>
+						<motion.div
+							className="flex gap-8 mt-12 pt-10 border-t border-gray-100"
+							{...fadeUp(0.55)}
+						>
 							{stats.map((s) => (
 								<div key={s.label}>
 									<div className="font-bold text-2xl text-gray-900">{s.value}</div>
@@ -342,11 +325,13 @@ export default function Home() {
 						</motion.div>
 					</div>
 
-					{/* Right — layer stack */}
-					<motion.div className="w-full md:flex-1 flex justify-center md:justify-end" {...fadeUp(0.3)}>
-						<LayerStack />
+					{/* Right — mechanical keypad */}
+					<motion.div
+						className="w-full md:flex-1 flex justify-center md:justify-end"
+						{...fadeUp(0.3)}
+					>
+						<MechanicalKeys />
 					</motion.div>
-
 				</div>
 			</section>
 
@@ -358,8 +343,11 @@ export default function Home() {
 					transition={{ duration: 28, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
 				>
 					{[...ticker, ...ticker].map((item, i) => (
-						// biome-ignore lint/suspicious/noArrayIndexKey: duplicated ticker
-						<span key={i} className="font-pixel text-[10px] uppercase tracking-widest text-amber-100 shrink-0">
+						<span
+							// biome-ignore lint/suspicious/noArrayIndexKey: duplicated ticker
+							key={i}
+							className="font-pixel text-[10px] uppercase tracking-widest text-amber-100 shrink-0"
+						>
 							{item}
 							<span className="mx-6 text-amber-300/60">·</span>
 						</span>
@@ -402,7 +390,9 @@ export default function Home() {
 										</span>
 									</div>
 
-									<h3 className="font-bold text-gray-900 text-2xl mb-3 tracking-tight">{card.title}</h3>
+									<h3 className="font-bold text-gray-900 text-2xl mb-3 tracking-tight">
+										{card.title}
+									</h3>
 									<p className="text-gray-500 text-sm leading-relaxed mb-6">{card.desc}</p>
 
 									<span className="inline-flex items-center gap-1.5 font-semibold text-sm text-amber-600 group-hover:gap-3 transition-all duration-200">
@@ -476,18 +466,20 @@ export default function Home() {
 			<footer className="bg-gray-950 py-20 px-6">
 				<div className="max-w-6xl mx-auto">
 					<div className="flex flex-col md:flex-row gap-12 mb-16">
-
 						{/* Brand */}
 						<div className="flex-1 max-w-sm">
 							<div className="flex items-center gap-3 mb-5">
 								<Image src="/logo.svg" alt={DATA.name} width={36} height={36} className="w-9 h-9" />
 								<div>
 									<span className="font-bold text-white text-[16px] block">{DATA.name}</span>
-									<span className="font-pixel text-[9px] text-amber-500 uppercase tracking-widest">{DATA.subtitle}</span>
+									<span className="font-pixel text-[9px] text-amber-500 uppercase tracking-widest">
+										{DATA.subtitle}
+									</span>
 								</div>
 							</div>
 							<p className="text-gray-500 text-sm leading-relaxed mb-6">
-								Technology evolves through layers, each one building meaningful solutions for developers worldwide.
+								Technology evolves through layers, each one building meaningful solutions for
+								developers worldwide.
 							</p>
 							<a
 								href={DATA.github}
